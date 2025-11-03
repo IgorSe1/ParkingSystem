@@ -1,28 +1,20 @@
 package parking;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class PaymentCheck {
-    private String id;
-    private boolean isPaid;
-    private boolean isPaidbyCash;
-    private LocalDateTime transaction_time;
-    private double amount_value;
+    protected String id;
+    protected boolean isPaid;
+    protected boolean isPaidbyCash;
+    protected LocalDateTime transaction_time;
+    protected double amount_value;
 
-    public PaymentCheck() {
-        this.id = "";
-        this.isPaid = false;
-        this.isPaidbyCash = false;
-        this.transaction_time = null;
-        this.amount_value = 0.0;
-    }
+    public PaymentCheck() { }
 
-    public PaymentCheck(String id, double amount_value) {
+    public PaymentCheck(String id, double amount) {
         this.id = id;
-        this.isPaid = false;
-        this.isPaidbyCash = false;
-        this.transaction_time = null;
-        this.amount_value = amount_value;
+        this.amount_value = amount;
     }
 
     public boolean isPaidNow() {
@@ -51,18 +43,30 @@ public class PaymentCheck {
         return transaction_time;
     }
 
-    public void setTransaction_time(LocalDateTime transaction_time) {
-        this.transaction_time = transaction_time;
+    public void setTransaction_time(LocalDateTime t) {
+        this.transaction_time = t;
     }
 
-    @Override
     public String toString() {
-        return "PaymentCheck{" +
-                "id='" + id + '\'' +
-                ", isPaid=" + isPaid +
-                ", isPaidbyCash=" + isPaidbyCash +
-                ", transaction_time=" + transaction_time +
-                ", amount_value=" + amount_value +
-                '}';
+        return "PaymentCheck{id=" + id + ", amount=" + amount_value + ", paid=" + isPaid + "}";
+    }
+
+    public static PaymentCheck create(String id, double amount) {
+        return new PaymentCheck(id, amount);
+    }
+
+    public static void printAll(PaymentCheck[] checks, int checkSize) {
+        System.out.println("Список чеків:");
+        if (checks == null || checkSize == 0) {
+            System.out.println("Чеків нема");
+            return;
+        }
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+        for (int i = 0; i < checkSize; i++) {
+            PaymentCheck ch = checks[i];
+            String status = ch.isPaidNow() ? "оплачено" : "не оплачено";
+            String time = (ch.getTransaction_time() != null) ? ch.getTransaction_time().format(fmt) : "нема дати";
+            System.out.println("Чек №" + (i + 1) + " | сума: " + ch.getAmount_value() + " грн | статус: " + status + " | дата: " + time);
+        }
     }
 }

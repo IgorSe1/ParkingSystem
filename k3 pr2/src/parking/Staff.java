@@ -1,21 +1,14 @@
 package parking;
 
 public class Staff {
-    private String name;
-    private int age;
-    private String workshift;
-    private int work_experience;
-    private String work_position;
-    private String staff_kind;
+    protected String name;
+    protected int age;
+    protected String workshift;
+    protected int work_experience;
+    protected String work_position;
+    protected String staff_kind;
 
-    public Staff() {
-        this.name = "";
-        this.age = 0;
-        this.workshift = "";
-        this.work_experience = 0;
-        this.work_position = "";
-        this.staff_kind = "";
-    }
+    public Staff() { }
 
     public Staff(String name, int age, String workshift, int work_experience, String work_position, String staff_kind) {
         this.name = name;
@@ -70,15 +63,15 @@ public class Staff {
         this.staff_kind = staff_kind;
     }
 
-    @Override
     public String toString() {
-        return "Staff{" +
-                "name='" + name + '\'' +
-                ", age=" + age +
-                ", workshift='" + workshift + '\'' +
-                ", work_experience=" + work_experience +
-                ", work_position='" + work_position + '\'' +
-                ", staff_kind='" + staff_kind + '\'' +
-                '}';
+        return "Staff{" + name + ", pos=" + work_position + ", shift=" + workshift + "}";
+    }
+
+    public static void startShift() {
+        System.out.println("Денна зміна зайшла на роботу. Нічна готується до чергування.");
+    }
+
+    public static void endShift() {
+        System.out.println("Денна зміна передає чергування. Нічна зміна заступає на пост.");
     }
 }

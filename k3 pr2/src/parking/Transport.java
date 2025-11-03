@@ -1,25 +1,21 @@
 package parking;
 
 import java.time.LocalDateTime;
+import java.util.Scanner;
 
 public class Transport {
-    private String car_model;
-    private String car_govnumber;
-    private LocalDateTime enter_date;
-    private LocalDateTime exit_date;
+    protected String car_model;
+    protected String car_govnumber;
+    protected LocalDateTime enter_date;
+    protected LocalDateTime exit_date;
 
-    public Transport() {
-        this.car_model = "";
-        this.car_govnumber = "";
-        this.enter_date = null;
-        this.exit_date = null;
-    }
+    public Transport() { }
 
-    public Transport(String car_model, String car_govnumber, LocalDateTime enter_date, LocalDateTime exit_date) {
-        this.car_model = car_model;
-        this.car_govnumber = car_govnumber;
-        this.enter_date = enter_date;
-        this.exit_date = exit_date;
+    public Transport(String model, String gov, LocalDateTime in, LocalDateTime out) {
+        this.car_model = model;
+        this.car_govnumber = gov;
+        this.enter_date = in;
+        this.exit_date = out;
     }
 
     public String getTransport_info() {
@@ -71,13 +67,17 @@ public class Transport {
         this.exit_date = exit_date;
     }
 
-    @Override
     public String toString() {
-        return "Transport{" +
-                "car_model='" + car_model + '\'' +
-                ", car_govnumber='" + car_govnumber + '\'' +
-                ", enter_date=" + enter_date +
-                ", exit_date=" + exit_date +
-                '}';
+        return getTransport_info();
+    }
+
+    public static void fillFromUser(Transport t, Scanner sc) {
+        System.out.print("Модель машини: ");
+        String carModel = sc.nextLine();
+        System.out.print("Держ номер машини: ");
+        String carNumber = sc.nextLine();
+        t.setCar_model(carModel);
+        t.setCar_govnumber(carNumber);
+        t.enterNow(LocalDateTime.now());
     }
 }

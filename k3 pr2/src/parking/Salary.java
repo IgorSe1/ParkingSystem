@@ -1,17 +1,15 @@
 package parking;
 
-public class Salary {
-    private double salary_rate;
-    private double salary_supplement;
+public class Salary extends Staff {
+    protected double salary_rate;
+    protected double salary_supplement;
 
-    public Salary() {
-        this.salary_rate = 0.0;
-        this.salary_supplement = 0.0;
-    }
+    public Salary() { }
 
-    public Salary(double salary_rate, double salary_supplement) {
-        this.salary_rate = salary_rate;
-        this.salary_supplement = salary_supplement;
+    public Salary(String name, int age, String workshift, int experience, String position, String kind, double rate, double supp) {
+        super(name, age, workshift, experience, position, kind);
+        this.salary_rate = rate;
+        this.salary_supplement = supp;
     }
 
     public double salary_compute() {
@@ -19,15 +17,17 @@ public class Salary {
     }
 
     public void addBonus(double x) {
-        if (x > 0) {
-            this.salary_supplement = this.salary_supplement + x;
-        }
+        this.salary_supplement += x;
     }
 
     protected void changeBase(double newRate) {
-        if (newRate > 0) {
-            this.salary_rate = newRate;
-        }
+        this.salary_rate = newRate;
+    }
+
+    @Override
+    void promoteTo(String newPos) {
+        this.work_position = newPos;
+        this.salary_supplement += 100;
     }
 
     public double getSalary_rate() {
@@ -46,12 +46,7 @@ public class Salary {
         this.salary_supplement = salary_supplement;
     }
 
-    @Override
     public String toString() {
-        return "Salary{" +
-                "salary_rate=" + salary_rate +
-                ", salary_supplement=" + salary_supplement +
-                ", total=" + salary_compute() +
-                '}';
+        return "Salary{staff=" + name + ", pos=" + work_position + ", sum=" + salary_compute() + "}";
     }
 }

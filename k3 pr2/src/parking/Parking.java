@@ -1,40 +1,39 @@
 package parking;
 
-public class Parking {
-    private boolean isFree;
-    private boolean isPaid;
-    private String parkplace_info;
+import java.time.LocalDateTime;
 
-    public Parking() {
-        this.isFree = true;
-        this.isPaid = false;
-        this.parkplace_info = "";
-    }
+public class Parking extends PaymentCheck {
+    private boolean isFree = true;
+    private String parkplace_info = "";
 
-    public Parking(boolean isFree, boolean isPaid, String parkplace_info) {
+    public Parking() { }
+
+    public Parking(boolean isFree, boolean paid, String info) {
         this.isFree = isFree;
-        this.isPaid = isPaid;
-        this.parkplace_info = parkplace_info;
+        this.parkplace_info = info;
+        if (paid) {
+            confirmPaid(true, LocalDateTime.now());
+        }
     }
 
     public String getParkplace_info() {
         return parkplace_info;
     }
 
-    public void occupyPlace(String infoText) {
+    public void occupy(Driver d) {
         this.isFree = false;
-        this.isPaid = false;
-        this.parkplace_info = infoText;
+        if (d != null) this.parkplace_info = d.getTransport_info();
+        else this.parkplace_info = "занято";
     }
 
     public void freePlace() {
         this.isFree = true;
-        this.isPaid = false;
         this.parkplace_info = "";
     }
 
     void markPaidInsidePackage() {
         this.isPaid = true;
+        this.transaction_time = LocalDateTime.now();
     }
 
     public boolean isFreeNow() {
@@ -42,27 +41,41 @@ public class Parking {
     }
 
     public boolean alreadyPaid() {
-        return isPaid;
+        return isPaidNow();
     }
 
-    public void setFree(boolean free) {
-        isFree = free;
-    }
-
-    public void setPaid(boolean paid) {
-        isPaid = paid;
-    }
-
-    public void setParkplace_info(String parkplace_info) {
-        this.parkplace_info = parkplace_info;
-    }
-
-    @Override
     public String toString() {
-        return "Parking{" +
-                "isFree=" + isFree +
-                ", isPaid=" + isPaid +
-                ", parkplace_info='" + parkplace_info + '\'' +
-                '}';
+        return "Parking{free=" + isFree + ", paid=" + isPaid + ", info='" + parkplace_info + "'}";
+    }
+
+    public static void printAll(Parking[] places, int[] placeDriverIndex, int[] placeCheckIndex, Driver[] drivers) {
+        System.out.println("Список місць:");
+        if (places == null || places.length == 0) {
+            System.out.println("Місць нема");
+            return;
+        }
+        for (int i = 0; i < places.length; i++) {
+            boolean free = places[i].isFreeNow();
+            boolean paid = places[i].alreadyPaid();
+            int drvIdx = placeDriverIndex[i];
+            String who;
+            if (free) {
+                who = "місце вільно";
+            } else {
+                if (drvIdx >= 0 && drvIdx < drivers.length && drivers[drvIdx] != null) {
+                    who = "зайнято водієм №" + (drvIdx + 1);
+                } else {
+                    who = "зайнято";
+                }
+            }
+            String payText;
+            if (free) {
+                payText = "оплата: нема";
+            } else {
+                if (paid) payText = "оплата: оплачено";
+                else payText = "оплата: не оплачено";
+            }
+            System.out.println("Місце " + (i + 1) + ": " + who + ", " + payText);
+        }
     }
 }

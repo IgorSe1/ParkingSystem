@@ -6,14 +6,11 @@ public class PublicUtilities {
     private double payment;
     private LocalDate payment_date;
 
-    public PublicUtilities() {
-        this.payment = 0.0;
-        this.payment_date = null;
-    }
+    public PublicUtilities() { }
 
-    public PublicUtilities(double payment, LocalDate payment_date) {
+    public PublicUtilities(double payment, LocalDate date) {
         this.payment = payment;
-        this.payment_date = payment_date;
+        this.payment_date = date;
     }
 
     public double getPayment() {
@@ -25,17 +22,11 @@ public class PublicUtilities {
     }
 
     public void rewritePayment(double newPayment, LocalDate newDate) {
-        if (newPayment > 0) {
-            this.payment = newPayment;
-            this.payment_date = newDate;
-        }
+        this.payment = newPayment;
+        this.payment_date = newDate;
     }
 
-    @Override
     public String toString() {
-        return "PublicUtilities{" +
-                "payment=" + payment +
-                ", payment_date=" + payment_date +
-                '}';
+        return "PublicUtilities{payment=" + payment + ", date=" + payment_date + "}";
     }
 }

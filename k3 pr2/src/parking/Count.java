@@ -7,28 +7,22 @@ public class Count {
     private int inHalfyear_customers;
     private int inYear_customers;
 
-    public Count() {
-        this.alltime_customers = 0;
-        this.inDay_customers = 0;
-        this.inMonth_customers = 0;
-        this.inHalfyear_customers = 0;
-        this.inYear_customers = 0;
-    }
+    public Count() { }
 
-    public Count(int alltime_customers, int inDay_customers, int inMonth_customers, int inHalfyear_customers, int inYear_customers) {
-        this.alltime_customers = alltime_customers;
-        this.inDay_customers = inDay_customers;
-        this.inMonth_customers = inMonth_customers;
-        this.inHalfyear_customers = inHalfyear_customers;
-        this.inYear_customers = inYear_customers;
+    public Count(int a, int d, int m, int h, int y) {
+        this.alltime_customers = a;
+        this.inDay_customers = d;
+        this.inMonth_customers = m;
+        this.inHalfyear_customers = h;
+        this.inYear_customers = y;
     }
 
     public void addVisit() {
-        alltime_customers = alltime_customers + 1;
-        inDay_customers = inDay_customers + 1;
-        inMonth_customers = inMonth_customers + 1;
-        inHalfyear_customers = inHalfyear_customers + 1;
-        inYear_customers = inYear_customers + 1;
+        alltime_customers++;
+        inDay_customers++;
+        inMonth_customers++;
+        inHalfyear_customers++;
+        inYear_customers++;
     }
 
     public int getAlltime_customers() {
@@ -51,14 +45,7 @@ public class Count {
         return inYear_customers;
     }
 
-    @Override
     public String toString() {
-        return "Count{" +
-                "alltime_customers=" + alltime_customers +
-                ", inDay_customers=" + inDay_customers +
-                ", inMonth_customers=" + inMonth_customers +
-                ", inHalfyear_customers=" + inHalfyear_customers +
-                ", inYear_customers=" + inYear_customers +
-                '}';
+        return "Count{all=" + alltime_customers + ", day=" + inDay_customers + ", month=" + inMonth_customers + "}";
     }
 }
