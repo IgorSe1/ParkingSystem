@@ -29,4 +29,15 @@ public class PublicUtilities {
     public String toString() {
         return "PublicUtilities{payment=" + payment + ", date=" + payment_date + "}";
     }
+
+    public static void startCounters() {
+        System.out.println("Почато відлік комунальних послуг");
+    }
+
+    public static void payUtilitiesAtEnd() {
+        int cars = DataStore.totalCars();
+        double total = DataStore.sumPaid();
+        double utilities = total * 0.005;
+        System.out.println("Комунальні послуги 0.5% від виручки: " + utilities + " грн (машин заїхало: " + cars + ", виручка: " + total + " грн)");
+    }
 }

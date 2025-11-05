@@ -1,18 +1,22 @@
 package parking;
 
-import java.time.LocalDateTime;
 import java.util.Scanner;
 
-public class Driver extends Transport {
-    private String phonenumber;
-    private String email;
-    private String name;
-    private String surname;
+public class Driver {
+    protected String phonenumber;
+    protected String email;
+    protected String name;
+    protected String surname;
+
+    public static class NameInfo {
+        public String name;
+        public String surname;
+        public NameInfo(String n, String s) { this.name = n; this.surname = s; }
+    }
 
     public Driver() { }
 
-    public Driver(String phone, String mail, String name, String surname, String carModel, String carNumber, LocalDateTime in) {
-        super(carModel, carNumber, in, null);
+    public Driver(String phone, String mail, String name, String surname) {
         this.phonenumber = phone;
         this.email = mail;
         this.name = name;
@@ -31,11 +35,8 @@ public class Driver extends Transport {
         this.phonenumber = newPhone;
     }
 
-    public Transport getTransport() {
-        return this;
-    }
-
-    void attachTransport(Transport t) {
+    public String getTransport_info() {
+        return getFullName();
     }
 
     public String getPhonenumber() {
@@ -71,30 +72,22 @@ public class Driver extends Transport {
     }
 
     public String toString() {
-        return "Driver{" + getFullName() + ", " + super.getTransport_info() + "}";
-    }
-
-    @Override
-    public String getTransport_info() {
-        return super.getTransport_info() + " / " + getFullName();
+        return "Driver{" + getFullName() + "}";
     }
 
     public static Driver createFromUser(Scanner sc) {
         System.out.print("Введи ім'я водія: ");
-        String name = sc.nextLine();
+        String n = sc.nextLine();
         System.out.print("Введи прізвище водія: ");
-        String surname = sc.nextLine();
+        String s = sc.nextLine();
+        NameInfo ni = new NameInfo(n, s);
         System.out.print("Телефон водія: ");
         String phone = sc.nextLine();
         System.out.print("Email водія: ");
         String mail = sc.nextLine();
-        Driver d = new Driver();
-        d.name = name;
-        d.surname = surname;
-        d.phonenumber = phone;
-        d.email = mail;
-        Transport.fillFromUser(d, sc);
-        return d;
+        Transport t = new Transport(phone, mail, ni.name, ni.surname, null, null, null, null);
+        Transport.fillFromUser(t, sc);
+        return t;
     }
 
     public static void printAll(Driver[] drivers, int driverSize) {
@@ -105,7 +98,17 @@ public class Driver extends Transport {
         }
         for (int i = 0; i < driverSize; i++) {
             Driver d = drivers[i];
-            System.out.println("Водій №" + (i + 1) + " | " + d.getFullName() + " | телефон=" + d.phone());
+            String car = "авто=нема";
+            if (d instanceof Transport) {
+                Transport t = (Transport) d;
+                String m = t.getCar_model();
+                String g = t.getCar_govnumber();
+                if (m == null) m = "";
+                if (g == null) g = "";
+                if (m.isEmpty() && g.isEmpty()) car = "авто=нема";
+                else car = "авто=" + m + " [" + g + "]";
+            }
+            System.out.println("Водій №" + (i + 1) + " | " + d.getFullName() + " | телефон=" + d.phone() + " | " + car);
         }
     }
 }

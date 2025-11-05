@@ -49,4 +49,10 @@ public class Salary extends Staff {
     public String toString() {
         return "Salary{staff=" + name + ", pos=" + work_position + ", sum=" + salary_compute() + "}";
     }
+
+    public static void payFromRevenue() {
+        double total = DataStore.sumPaid();
+        double payout = total * 0.10;
+        System.out.println("Виплата персоналу з виручки 10%: " + payout + " грн");
+    }
 }

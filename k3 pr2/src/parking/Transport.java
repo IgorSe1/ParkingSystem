@@ -3,7 +3,7 @@ package parking;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
-public class Transport {
+public class Transport extends Driver {
     protected String car_model;
     protected String car_govnumber;
     protected LocalDateTime enter_date;
@@ -11,15 +11,19 @@ public class Transport {
 
     public Transport() { }
 
-    public Transport(String model, String gov, LocalDateTime in, LocalDateTime out) {
+    public Transport(String phone, String mail, String name, String surname, String model, String gov, LocalDateTime in, LocalDateTime out) {
+        super(phone, mail, name, surname);
         this.car_model = model;
         this.car_govnumber = gov;
         this.enter_date = in;
         this.exit_date = out;
     }
 
+    @Override
     public String getTransport_info() {
-        return car_model + " [" + car_govnumber + "]";
+        String base = super.getFullName();
+        String car = (car_model == null ? "" : car_model) + " [" + (car_govnumber == null ? "" : car_govnumber) + "]";
+        return car.trim() + " / " + base;
     }
 
     public void enterNow(LocalDateTime t) {

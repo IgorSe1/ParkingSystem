@@ -23,7 +23,7 @@ public class Parking extends PaymentCheck {
     public void occupy(Driver d) {
         this.isFree = false;
         if (d != null) this.parkplace_info = d.getTransport_info();
-        else this.parkplace_info = "занято";
+        else this.parkplace_info = "зайнято";
     }
 
     public void freePlace() {
